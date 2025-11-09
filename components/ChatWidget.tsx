@@ -11,19 +11,24 @@ type ChatMessage = {
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([
-    {
-      role: "assistant",
-      content:
-        "Hi, I’m the Project AWARE assistant. Ask me anything about hailstorms and extreme weather preparedness.",
-    },
+   {
+     role: "assistant" as const,
+     content:
+       "Hi, I’m the Project AWARE assistant. Ask me anything about hailstorms and extreme weather preparedness.",
+   },
   ]);
+
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const sendMessage = async () => {
     if (!input.trim()) return;
 
-    const newMessages = [...messages, { role: "user", content: input }];
+    const newMessages: ChatMessage[] = [
+  ...messages,
+  { role: "user" as const, content: input },
+];
+
     setMessages(newMessages);
     setInput("");
     setIsLoading(true);
