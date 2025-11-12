@@ -112,6 +112,7 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+/* base layer stays the same */
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -120,3 +121,37 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* 🔹 Breathing shield glow animation */
+@keyframes shieldBreath {
+  0% {
+    opacity: 0.65;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+  100% {
+    opacity: 0.65;
+    transform: scale(1);
+  }
+}
+
+/* 🔹 Utility for the glowing shield overlay */
+@layer utilities {
+  .shield-glow {
+    position: absolute;
+    background:
+      radial-gradient(circle at 50% 40%, rgba(56, 189, 248, 0.55), transparent 60%),
+      radial-gradient(circle at 50% 100%, rgba(56, 189, 248, 0.35), transparent 70%);
+    box-shadow: 0 0 80px rgba(56, 189, 248, 0.7);
+    border-radius: 9999px;
+    animation: shieldBreath 6s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 1;
+  }
+}
+
+
+

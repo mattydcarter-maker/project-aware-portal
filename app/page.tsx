@@ -36,77 +36,113 @@ export default function ProjectAWAREPortal() {
   const postcodeMatch = address.match(/(\d{4})/);
   const postcode = postcodeMatch ? postcodeMatch[1] : "2000";
 
-  return (
-    <div className="min-h-screen bg-[#F5F7FB] text-slate-900">
-      {/* Top bar */}
-      <header className="flex items-center justify-between px-8 py-4 border-b bg-white">
-        <div className="flex items-center gap-3">
-          {/* Use actual Suncorp logo asset in your project */}
-          <img src="/Suncorp-Bank-Logo.jpg" alt="Suncorp logo" className="h-8 w-auto" />
+ const pageBackgroundStyle = !submitted
+  ? {
+      backgroundImage: "url('/project-aware-shield-bg.png')",
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+    }
+  : {};
 
+return (
+  <div
+    className={`min-h-screen text-slate-900 ${
+      submitted ? "bg-[#F5F7FB]" : ""
+    }`}
+    style={pageBackgroundStyle}
+  >
+          {/* Top bar */}
+      <header className="sticky top-0 z-20 border-b border-slate-200/70 bg-white/90 backdrop-blur-md">
+        <div className="max-w-6xl mx-auto flex items-center justify-between px-6 py-3">
+          <div className="flex items-center gap-3">
+            {/* Logo */}
+            <img
+              src="/Suncorp-Bank-Logo.jpg"
+              alt="Suncorp logo"
+              className="h-9 w-auto rounded-sm"
+            />
 
-          <div className="flex flex-col">
-            <span className="text-xs uppercase tracking-[0.2em] text-slate-500">
-              Project AWARE
-            </span>
-            <h1 className="text-xl font-semibold text-slate-900">
-              Action with Awareness and Resilience Engagement
-            </h1>
+            <div className="flex flex-col leading-tight">
+              <span className="text-[10px] font-semibold uppercase tracking-[0.25em] text-slate-500">
+                Project Aware
+              </span>
+              <h1 className="text-sm md:text-base font-semibold text-slate-900">
+                Action with Awareness and Resilience Engagement
+              </h1>
+            </div>
           </div>
-        </div>
 
-        <Button
-          variant="outline"
-          className="border-slate-300 text-slate-800 rounded-full px-4 py-2 text-sm"
-        >
-          Sign in
-        </Button>
+          <Button
+            variant="outline"
+            className="rounded-full px-5 h-9 text-sm border-slate-300 bg-white/70 hover:bg-slate-50 shadow-sm"
+          >
+            Sign in
+          </Button>
+        </div>
       </header>
 
-      <main className="px-8 py-6 space-y-6">
-        {/* Address capture / personalisation gate */}
-        {!submitted ? (
-          <Card className="max-w-3xl mx-auto shadow-lg border-none">
-            <CardHeader className="border-b pb-4">
-              <CardTitle className="text-2xl font-semibold text-slate-900">
-                Let’s personalise your hail preparedness dashboard
-              </CardTitle>
-              <p className="text-sm text-slate-600 mt-1">
-                Enter your full address so Project AWARE can tailor actions to
-                your postcode, home type and household.
-              </p>
-            </CardHeader>
-            <CardContent className="pt-4 space-y-4">
-              <div className="space-y-1">
-                <label className="text-xs font-medium text-slate-600 uppercase tracking-wide">
-                  Home address
-                </label>
-                <Input
-                  placeholder="e.g. 125 Pitt Street, Sydney NSW 2000"
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
-                  className="h-12 text-base border-slate-300"
-                />
-              </div>
-              <Button
-                onClick={handleSubmit}
-                className="bg-[#FFD200] hover:bg-[#E5BE00] text-slate-900 font-semibold px-6 h-11 rounded-full"
-              >
-                Generate my resilience dashboard
-              </Button>
 
-              {/* Cross-platform access banner */}
-              <div className="flex items-center gap-3 text-xs text-slate-600 mt-2">
-                <MonitorSmartphone className="w-4 h-4" />
-                <span>
-                  Available on web, mobile and tablet • Progress syncs securely
-                  across all your devices.
-                </span>
-              </div>
-            </CardContent>
-          </Card>
-        ) : (
-          <>
+
+      <main className="px-8 py-6 space-y-6">
+         {/* Address capture / personalisation gate */}
+  {!submitted ? (
+    <section className="relative -mx-8 flex items-center justify-center min-h-[calc(100vh-80px)] px-4">
+      {/* Soft gradient over the background image for readability */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-slate-900/20 via-transparent to-slate-900/60" />
+      <div className="pointer-events-none absolute bottom-4 left-1/2 -translate-x-1/2 translate-y-30 h-[835px] w-[835px] rounded-full shield-glow" />
+
+      <Card className="relative z-10 w-full max-w-3xl rounded-3xl border border-white/40 bg-slate-50/90 backdrop-blur-xl shadow-[0_24px_80px_rgba(15,23,42,0.8)]">
+        <CardHeader className="pb-6">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-emerald-700 mb-1">
+            Hail pilot · Project AWARE
+          </p>
+          <CardTitle className="text-3xl font-semibold text-slate-900">
+            Let’s personalise your hail preparedness dashboard
+          </CardTitle>
+          <p className="text-sm text-slate-600 mt-2">
+            Enter your full address so Project AWARE can tailor actions to your
+            postcode, home type and household.
+          </p>
+        </CardHeader>
+
+        <CardContent className="pt-0 pb-6 px-6 space-y-5">
+          <div className="space-y-2">
+            <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">
+              Home address
+            </label>
+            <Input
+              placeholder="e.g. 125 Pitt Street, Sydney NSW 2000"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              className="h-12 text-base border-slate-200 bg-white/80 focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-0"
+            />
+          </div>
+
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <Button
+              onClick={handleSubmit}
+              className="w-full sm:w-auto bg-[#FFD200] hover:bg-[#E5BE00] text-slate-900 font-semibold px-8 h-11 rounded-full shadow-md shadow-amber-500/30"
+            >
+              Generate my resilience dashboard
+            </Button>
+
+            {/* Cross-platform access banner */}
+            <div className="flex items-center gap-2 text-xs text-slate-600">
+              <MonitorSmartphone className="w-4 h-4" />
+              <span>
+                Available on web · Progress syncs securely
+                
+              </span>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </section>
+  ) : (
+    <>
+      {/* Top hero row */}
+      {/* ...leave everything below here exactly as you already have it */}
             {/* Top hero row */}
             <div className="grid grid-cols-1 lg:grid-cols-[2fr,1fr] gap-4">
               {/* Resilience dashboard hero */}
@@ -773,4 +809,4 @@ export default function ProjectAWAREPortal() {
       <ChatWidget />
     </div>
   );
-}
+  }
